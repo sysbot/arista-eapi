@@ -1,0 +1,59 @@
+# You can use a .tt extension instead if you wish
+grammar EOS
+  rule username
+    (name / body)*
+  end
+
+  rule name
+    'username ' string
+  end
+
+  rule body
+    ( identifier / integer / string / space )* <Body>
+  end
+
+  rule integer
+    ('+' / '-')? [0-9]+ <IntegerLiteral>
+  end
+
+  rule string
+    '"' ([^"\\] / "\\" . )* '"' <StringLiteral>
+  end
+
+  rule identifier
+    [a-zA-Z\=\*] [a-zA-Z0-9_\=\*]* <Identifier>
+  end
+
+  rule space
+    [\s]+
+  end
+
+
+#  rule tokens
+#    ('role ' role) / ('secret ' secret) / ('sshkey' sshkey)
+#  end
+#
+#  rule sshkey
+#    '([^\s]+)'
+#  end
+#
+#  rule role
+#    '([^\s]+)'
+#  end
+#
+#  rule secret
+#    '0' unencrypted / '5' encrypted
+#  end
+#
+#  rule unencrypted
+#    '([^\s]+)'
+#  end
+#
+#  rule encrypted
+#    '([^\s]+)'
+#  end
+#
+#  rule plain_digits
+#    [0-9] [0-9]*
+#  end
+end

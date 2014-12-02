@@ -1,0 +1,50 @@
+# This file contains the PEG grammar definition that
+# Treetop uses to generate our parser.
+#
+# For more information check out the Treetop site:
+# http://treetop.rubyforge.org/
+
+grammar CLI
+
+  rule username
+    ('username ' word ) <Username>
+    #('username ' word / (space (role / sshkey)) / space secret) <Username>
+  end
+
+  rule role
+    'role ' identifier <Role>
+  end
+
+  rule secret
+    'secret ' secret_format identifier <Secret>
+  end
+
+  rule secret_format
+    '0' / '5'
+  end
+
+  rule sshkey
+    'sshkey ' identifier <SSHKey>
+  end
+
+  rule word
+    ([a-zA-Z]+ [ \t]+)  <WordLiteral>
+  end
+
+  rule integer
+    ('+' / '-')? [0-9]+ <IntegerLiteral>
+  end
+
+  rule string
+    '"' ([^"\\] / "\\" . )* '"' <StringLiteral>
+  end
+
+  rule identifier
+    [a-zA-Z\=\*] [a-zA-Z0-9_\=\*]* <Identifier>
+  end
+
+  rule space
+    [\s]+
+  end
+
+end
