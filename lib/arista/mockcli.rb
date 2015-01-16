@@ -58,7 +58,7 @@ class MockCli
   end
 
   def username(input)
-    # Regex for now. CLI parsing is preferred, WIP in treetop branch
+    # Regex for now. Full expression parser is preferred, WIP in treetop branch
     standard = /username[\s]+([a-zA-Z0-9\-]+)[\s]+role[\s]+([a-zA-Z\-]+)[\s]+secret[\s]+([\d])+[\s]+(.*)/.match(input)
     sshkey = /username[\s]+([a-zA-Z0-9\-]+)[\s]+sshkey[\s]+(.*)/.match(input)
 
@@ -112,32 +112,13 @@ class MockCli
   end
 
   def valid_input?(input)
-    #puts "-------------------------------"
-    #puts "DEBUG: input #{input}"
-    #puts "DEBUG: default #{default?}"
-    #puts "DEBUG: enable #{enable?}"
-    #puts "DEBUG: configure #{configure?}"
-    #puts "-------------------------------"
-
     case
     when default?
-      if @@default.include?(input)
-        true
-      else
-        false
-      end
+      @@default.include?(input) ? true : false
     when enable?
-       if @@enable.include?(input)
-        true
-      else
-        false
-      end
+      @@enable.include?(input) ? true : false
     when configure?
-       if @@configure.include?(input)
-        true
-      else
-        false
-      end
+      @@configure.include?(input) ? true : false
     end
   end
 end
