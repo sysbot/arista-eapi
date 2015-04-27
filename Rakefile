@@ -1,5 +1,3 @@
-require "bundler/gem_tasks"
-
 require 'rake/testtask'
 
 Rake::TestTask.new do |t|
@@ -8,3 +6,6 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
+task :gem do
+  system('gem build arista-eapi.gemspec')
+end
