@@ -1,5 +1,5 @@
 module Arista
   module EAPI
-    VERSION = "0.11.3"
+    VERSION = "0.11.6"
   end
 end
