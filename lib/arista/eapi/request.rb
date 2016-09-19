@@ -1,14 +1,15 @@
 module Arista
   module EAPI
     class Request
-      attr_accessor :switch, :commands, :options
+      attr_accessor :switch, :commands, :options, :verify_ssl
 
-      def initialize(switch, commands, options = {})
+      def initialize(switch, commands, options = {}, verify_ssl=true)
         options[:format] ||= 'json'
 
         self.switch = switch
         self.commands = commands
         self.options = options
+        self.verify_ssl = verify_ssl
       end
 
       def payload
@@ -25,7 +26,12 @@ module Arista
       end
 
       def execute
-        Arista::EAPI::Response.new(commands, RestClient.post(switch.url, payload))
+        req = RestClient::Resource.new(
+          switch.url,
+          payload,
+          :verify_ssl       =>  self.verify_ssl
+        )
+        Arista::EAPI::Response.new(commands, req.post)
       end
     end
   end
